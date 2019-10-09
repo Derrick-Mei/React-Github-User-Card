@@ -4,6 +4,7 @@ import "./App.css";
 
 import Card from "./components/Card";
 import FollowerList from "./components/FollowerList";
+import GHForm from "./components/GHForm";
 
 class App extends React.Component {
   constructor() {
@@ -13,6 +14,8 @@ class App extends React.Component {
       userObj: {},
       followers: []
     };
+    this.getData = this.getData.bind(this);
+    // this.changeGitHubHandle = this.changeGitHubHandle.bind(this);
   }
 
   getData() {
@@ -35,15 +38,18 @@ class App extends React.Component {
           .catch(err => console.log("error: ", err))
       )
     ).then(dataArray => {
-      console.log(dataArray);
+      // console.log(dataArray);
       this.setState(
         {
           userObj: dataArray[0],
           followers: dataArray[1]
-        },
-        () => console.log("state: ", this.state)
+        }
+        // () => console.log("state: ", this.state)
       );
     });
+  }
+  changeGithubHandle= (input) => {
+    this.setState({ githubHandle: input });
   }
 
   componentDidMount() {
@@ -67,6 +73,8 @@ class App extends React.Component {
       <div className="App">
         <Card userObj={this.state.userObj} />
         <FollowerList followers={this.state.followers} />
+        <GHForm changeGithubHandle={this.changeGithubHandle} />
+        <div>{this.state.githubHandle}</div>
       </div>
     );
   }
